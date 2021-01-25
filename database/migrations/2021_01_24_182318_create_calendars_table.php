@@ -15,7 +15,6 @@ class CreateCalendarsTable extends Migration
             $table->dateTime('start');
             $table->dateTime('end');
             $table->string('color')->default('#fe4918');
-            $table->boolean('holiday')->default(0);
             $table->integer('user_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();

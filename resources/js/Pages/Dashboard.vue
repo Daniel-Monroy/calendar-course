@@ -274,7 +274,7 @@
                             <!-- Personalizado de acuerdo al color del evento -->
                             <div
                                 class  = "modal-header text-white font-weight-bold"
-                                :style = "{'background-color':event.color}"
+                                :style = "{'background-color':'#5d6ad0'}"
                             >
                                 <h5 class="modal-title" id="editEvent">
 
@@ -411,18 +411,17 @@
                                     v-if  = "! showUpdateEvent && ! showDeleteEvent">
                                     <button
                                         type   = "button"
-                                        class  = "btn btn-outline-info btn-sm"
-                                        @click = "mtdShowUpdateEvent(event)"
-                                        >
-                                        <i class="fas fa-edit"></i>
-                                        <span>Editar</span>
-                                    </button>
-                                    <button
-                                        type   = "button"
-                                        class  = "btn btn-outline-secondary btn-sm"
+                                        class  = "btn btn-secondary btn-sm mr-1"
                                         @click = "hideModalEvent"
                                         >
                                         <span>Cerrar</span>
+                                    </button>
+                                    <button
+                                        type   = "button"
+                                        class  = "btn btn-primary btn-sm"
+                                        @click = "mtdShowUpdateEvent(event)"
+                                        >
+                                        <span>Formulario de edición</span>
                                     </button>
                                 </div>
                                 <!-- Final Botones información evento -->
@@ -432,19 +431,19 @@
                                     v-if  = "showUpdateEvent"
                                     >
                                     <button
+                                        @click = "showUpdateEvent = false"
+                                        type   = "button"
+                                        class  = "btn btn-secondary btn-sm mr-1"
+                                        >
+                                        <span>Cancelar</span>
+                                    </button>
+                                    <button
                                         type  ="button"
-                                        class ="btn btn-outline-info btn-sm"
+                                        class ="btn btn-primary btn-sm"
                                         @click="updateEvent(event)"
                                         >
                                         <i class="fas fa-edit"></i>
                                         <span>Actualizar</span>
-                                    </button>
-                                    <button
-                                        @click = "showUpdateEvent = false"
-                                        type   = "button"
-                                        class  = "btn btn-outline-danger btn-sm"
-                                        >
-                                        <span>Cancelar</span>
                                     </button>
                                 </div>
                                 <!--  Botones eliminar -->
@@ -453,19 +452,19 @@
                                     v-if  = "showDeleteEvent && ! showUpdateEvent"
                                     >
                                     <button
+                                        @click = "showDeleteEvent = false"
                                         type   = "button"
-                                        class  = "btn btn-outline-danger btn-sm mr-1"
+                                        class  = "btn btn-outline-secondary btn-sm mr-1"
+                                        >
+                                        No, cancelar
+                                    </button>
+                                    <button
+                                        type   = "button"
+                                        class  = "btn btn-primary btn-sm"
                                         @click = "deleteEvent(event)"
                                         >
                                         <i class="fas fa-trash-alt"></i>
                                         Si, eliminar
-                                    </button>
-                                    <button
-                                        @click = "showDeleteEvent = false"
-                                        type   = "button"
-                                        class  = "btn btn-outline-secondary btn-sm"
-                                        >
-                                        No, cancelar
                                     </button>
                                 </div>
                                 <!-- Final Botones eliminar -->
@@ -481,48 +480,20 @@
     import AppLayout from '@/Layouts/AppLayout'
     import Vuetify, {
         VApp,
-        VBtn,
         VCalendar,
-        VCard,
-        VCardActions,
-        VCardText,
-        VCol,
-        VIcon,
-        VMenu,
-        VList,
-        VListItem,
-        VListItemTitle,
-        VRow,
-        VSpacer,
         VSheet,
-        VToolbar,
-        VToolbarTitle
     } from 'vuetify/lib'
     export default {
         components: {
             AppLayout,
             // VUETIFY COMPONENTS
             VApp,
-            VBtn,
             VCalendar,
-            VCard,
-            VCardActions,
-            VCardText,
-            VCol,
-            VIcon,
-            VMenu,
-            VList,
-            VListItem,
-            VListItemTitle,
-            VRow,
-            VSpacer,
             VSheet,
-            VToolbar,
-            VToolbarTitle, 
         },
         data(){
             return {
-				locale: 'es',
+                locale: 'es',
                 focus : '',
                 type  : 'month',
                 typeToLabel: {
@@ -535,7 +506,7 @@
                 selectedOpen: false,
                 events      : [],
                 errors      : [],
-   				errs        : '',
+                errs        : '',
                 event:{
                     name        : '',
                     description : '',
@@ -573,12 +544,15 @@
             next () {
                 this.$refs.calendar.next()
             },
+            // SHOW EVENT
             showEvent ({ nativeEvent, event }) {
                 const open = () => {
-                    this.event   = event
+                    this.event           = event
+                    this.showUpdateEvent = false;
+                    this.showDeleteEvent = false;
                     $("#modalEvent").modal({
-                        backdrop: 'static',
-                        keyboard: false
+                        backdrop : 'static',
+                        keyboard : false
                     })
                     setTimeout(() => this.selectedOpen = true, 10)
                 }
